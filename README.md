@@ -1,10 +1,6 @@
 数据库连接池设计和实现(Java版本)
 ===
 
-[TOC]
-
-
-
 # 1 前言
 数据库连接池是目前系统开发必须面对和考虑的问题，原理并不复杂，主要是减少重复连接数据库的代价；在系统中创建预期数量的数据库连接，并将这些连接以一个集合或类似生活中的池一样管理起来，用到的时候直接拿过来使用，用完返回给系统管理；需要注意和主要的难点：  
 1. 连接池的同步；
@@ -111,19 +107,19 @@ row:1,column:1,columnName:CURRENT_TIMESTAMP(),value:2020-09-12 17:15:07.0
 2020-09-12 17:15:17.182 WARN  com.sywu.dao.ConnectionPoolImpl 183 findFreeConnection - Conn_1a6deeb1-2a97-4307-a2c3-ec99b0970a45 连接被使用...
 row:1,column:1,columnName:CURRENT_TIMESTAMP(),value:2020-09-12 17:15:07.0
 2020-09-12 17:15:17.193 WARN  com.sywu.dao.ConnectionPoolImpl 183 findFreeConnection - Conn_c310ebaa-c880-496e-a4d6-c45a1df51ca8 连接被使用...
-row:1,column:1,columnName:dbname,value:lg_tyrz_db03
-row:1,column:2,columnName:tabname,value:tyrz_athena_api
+row:1,column:1,columnName:dbname,value:testdb01
+row:1,column:2,columnName:tabname,value:test_tab01
 row:1,column:3,columnName:partspec,value:day
-row:1,column:4,columnName:location,value:hdfs://gdhlwtz/user/lg_tyrz_user03/data/athena-api
+row:1,column:4,columnName:location,value:hdfs://hd01/user/data/test_tab01
 2020-09-12 17:15:17.206 INFO  com.sywu.dao.ConnectionPoolImpl 365 returnConnection - Conn_1a6deeb1-2a97-4307-a2c3-ec99b0970a45 连接被返回到连接池中...
 row:1,column:1,columnName:CURRENT_TIMESTAMP(),value:2020-09-12 17:15:07.0
 2020-09-12 17:15:17.218 WARN  com.sywu.dao.ConnectionPoolImpl 183 findFreeConnection - Conn_1a6deeb1-2a97-4307-a2c3-ec99b0970a45 连接被使用...
 row:1,column:1,columnName:CURRENT_TIMESTAMP(),value:2020-09-12 17:15:07.0
 2020-09-12 17:15:17.229 WARN  com.sywu.dao.ConnectionPoolImpl 183 findFreeConnection - Conn_3b209618-1319-4cac-8a88-8571e9dfbc54 连接被使用...
-row:1,column:1,columnName:dbname,value:lg_tyrz_db03
-row:1,column:2,columnName:tabname,value:tyrz_athena_api
+row:1,column:1,columnName:dbname,value:testdb01
+row:1,column:2,columnName:tabname,value:test_tab01
 row:1,column:3,columnName:partspec,value:day
-row:1,column:4,columnName:location,value:hdfs://gdhlwtz/user/lg_tyrz_user03/data/athena-api
+row:1,column:4,columnName:location,value:hdfs://hd01/user/data/test_tab01
 2020-09-12 17:15:17.242 INFO  com.sywu.dao.ConnectionPoolImpl 365 returnConnection - Conn_1a6deeb1-2a97-4307-a2c3-ec99b0970a45 连接被返回到连接池中...
 row:1,column:1,columnName:CURRENT_TIMESTAMP(),value:2020-09-12 17:15:07.0
 2020-09-12 17:15:17.254 WARN  com.sywu.dao.ConnectionPoolImpl 183 findFreeConnection - Conn_1a6deeb1-2a97-4307-a2c3-ec99b0970a45 连接被使用...
