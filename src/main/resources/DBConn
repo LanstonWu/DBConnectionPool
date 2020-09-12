@@ -1,0 +1,16 @@
+# 数据库类型
+dbType=MySQL
+# 数据库驱动类
+jdbcDriver=com.mysql.jdbc.Driver
+# 数据库url
+dbUrl=jdbc:mysql://10.192.168.1:3306/test?useSSL=false
+# 数据库用户名
+dbUsername=user01
+# 数据库密码
+dbPassword=Uw@0801%
+# 初始化数据库连接
+initialConnections=5
+# 连接池满后自动扩展连接数
+incrementalConnections=5
+# 最大数据库连接
+maxConnections=30
