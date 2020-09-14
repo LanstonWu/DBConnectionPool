@@ -3,9 +3,7 @@ package com.sywu.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
-
 import com.properties.PropertiesUtil;
-
 
 /** 连接池工具类(单实例)
  * @author 吴苏远
@@ -19,13 +17,26 @@ public class ConnectionPoolUtil implements ConnectionPool {
        @pdRoleInfo migr=yes name=ConnectionPoolUtil assc=association2 */
    private static ConnectionPoolUtil instance = new ConnectionPoolUtil();
    
-   
    /** @pdOid a505b63a-ba23-4081-93fb-7901f3f22814 */
-   private ConnectionPoolUtil() {}
+   private ConnectionPoolUtil() {
+	}
+   
+   /***
+    * 加载数据库连接配置信息并初始化连接池对象
+    * @param connectionConfigFile
+    */
+   private static synchronized void initConnPoolImpl(String connectionConfigFile){
+	   if(null==connPoolImpl){
+		   //读取配置文件
+	 		Properties p = PropertiesUtil.createPropertiesByFile(connectionConfigFile);
+			connPoolImpl = new ConnectionPoolImpl(p.getProperty("jdbcDriver"), p.getProperty("dbUrl") ,p.getProperty("dbUsername"),p.getProperty("dbPassword"),Integer.parseInt(p.getProperty("initialConnections")),Integer.parseInt(p.getProperty("incrementalConnections")),Integer.parseInt(p.getProperty("maxConnections")),p.getProperty("dbType"));
+			System.out.println("ConnectionPoolImpl created...");
+		}
+   }
    
    /** @pdOid 27edfc42-a54d-405f-a89f-d5863937f20c */
    public static ConnectionPoolUtil getInstance() {
-    return instance;
+	   return instance;
    }
    
    /** @pdOid ef8e5b65-7caa-485c-a2d3-94515cc81338 */
@@ -74,9 +85,7 @@ public class ConnectionPoolUtil implements ConnectionPool {
    @Override
    public void initPool(String connectionConfigFile) {
    	try {
-   		//读取配置文件
-   		Properties p = PropertiesUtil.createPropertiesByFile(connectionConfigFile);
-		connPoolImpl = new ConnectionPoolImpl(p.getProperty("jdbcDriver"), p.getProperty("dbUrl") ,p.getProperty("dbUsername"),p.getProperty("dbPassword"),Integer.parseInt(p.getProperty("initialConnections")),Integer.parseInt(p.getProperty("incrementalConnections")),Integer.parseInt(p.getProperty("maxConnections")),p.getProperty("dbType"));
+   		initConnPoolImpl(connectionConfigFile);
    		connPoolImpl.createPool();
    	} catch (Exception e) {
    		e.printStackTrace();
@@ -90,7 +99,6 @@ public class ConnectionPoolUtil implements ConnectionPool {
    	try {
    		conn = connPoolImpl.getConnection();
    	} catch (SQLException e) {
-   		
    		e.printStackTrace();
    	}
    	return conn;
@@ -100,8 +108,7 @@ public class ConnectionPoolUtil implements ConnectionPool {
     * @pdOid d658da6d-5f06-4c9e-9aec-a6be1ab45aea */
    @Override
    public void returnConnection(Connection conn) {
-   	
-   	connPoolImpl.returnConnection(conn);
+	   connPoolImpl.returnConnection(conn);
    }
    
    /** @pdOid d1339a0f-ef22-4d97-9145-70e7ac07cd00 */
@@ -110,7 +117,6 @@ public class ConnectionPoolUtil implements ConnectionPool {
    	try {
    		connPoolImpl.refreshConnections();
    	} catch (SQLException e) {
-   		
    		e.printStackTrace();
    	}
    }
